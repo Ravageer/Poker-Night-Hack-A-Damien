@@ -7,9 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <style>
-/* ═══════════════════════════════════════════════════════
-   RESET & VARIABLES
-═══════════════════════════════════════════════════════ */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -62,9 +60,7 @@ html, body {
   pointer-events: none;
 }
 
-/* ═══════════════════════════════════════════════════════
-   SCENE + TABLE
-═══════════════════════════════════════════════════════ */
+
 #scene {
   position: fixed; inset: 0; z-index: 1;
   display: flex; align-items: center; justify-content: center;
@@ -522,9 +518,7 @@ html, body {
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════
-   AUDIO MANAGER (WEB AUDIO API + HTML5 AUDIO)
-═══════════════════════════════════════════════════════ */
+
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 // 1. Procedural Synthetic Tick (For ultra-fast rotary dial inputs)
@@ -565,11 +559,11 @@ function playSound(name) {
   }
 }
 
-// 3. Browser Audio Unlock Listener (CRITICAL)
+// 3. Browser Audio Unlock Listener 
 document.getElementById('start-screen').addEventListener('click', () => {
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
-    // Silent play to unlock mobile/strict browser policies
+    
     Object.values(sfx).forEach(a => {
       a.play().then(() => a.pause()).catch(() => {});
     });
@@ -1054,7 +1048,7 @@ function handleState(state) {
     const hpActive = hp.status === 'Active';
     const isBettingStage = !state.stage.includes('Game Over') && !state.stage.includes('Wins') && !state.stage.includes('Waiting') && !state.stage.includes('Showdown') && !state.stage.includes('YOU WIN');
 
-    // ONLY SHOW TIMER ON THE PLAYER'S TURN 
+    
     if (isBettingStage && hpActive) {
         startTimer(7); 
     } else {
@@ -1085,7 +1079,7 @@ socket.on('dial_update', ({ pos }) => {
   const hpActive = prevState?.players['HardwarePlayer']?.status === 'Active';
   const isBettingStage = prevState && !prevState.stage.includes('Game Over') && !prevState.stage.includes('Wins') && !prevState.stage.includes('Waiting') && !prevState.stage.includes('Showdown') && !prevState.stage.includes('YOU WIN');
 
-  // ONLY show interactions & pause the timer if it's the player's active turn
+  
   if (hpActive && isBettingStage) {
     const delta = Math.max(0, pos - dialBase);
     const betAmt = Math.min(Math.round(delta * 10), playerMoney);
